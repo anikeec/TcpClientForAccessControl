@@ -19,6 +19,7 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -81,7 +82,8 @@ public class App
             packet.setDeviceNumber(deviceNumber); 
             packet.setCardNumber("11111111");            
             
-            byte[] packetBytes;            
+            byte[] packetBytes;
+            byte[] packetBytesForSend;            
             int packetNumber = 25;
             RawPacket resultPacket;
             long timeStart;
@@ -96,9 +98,16 @@ public class App
                 } else {
                     packetBytes = new byte[]{1,2,3,4,5};
                 }
-                timeStart = System.nanoTime();                
-                os.write(packetBytes);
-                os.write("\r\n".getBytes());
+                timeStart = System.nanoTime();
+                packetBytesForSend = new byte[packetBytes.length + 2];
+                int i = 0;
+                for(i=0; i<packetBytes.length; i++) {
+                    packetBytesForSend[i] = packetBytes[i];
+                }
+                packetBytesForSend[i++] = '\r';
+                packetBytesForSend[i++] = '\n';
+                os.write(packetBytesForSend);
+//                os.write("\r\n".getBytes());
                 os.flush();
 
                 List<Byte> bytes = new ArrayList<>();
@@ -120,7 +129,7 @@ public class App
                 timeFinish = System.nanoTime();
                 bytes = bytes.subList(0, bytes.size() - 2);
                 packetBytes = new byte[bytes.size()];
-                for(int i=0; i<bytes.size(); i++) {
+                for(i=0; i<bytes.size(); i++) {
                     packetBytes[i] = bytes.get(i);
                 }
 
