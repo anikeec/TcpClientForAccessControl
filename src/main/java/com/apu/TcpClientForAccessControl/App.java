@@ -63,6 +63,10 @@ public class App
         } else {
             deviceNumber = 15;
         }
+        
+//        deviceNumber = 15;
+        
+        
         OutputStream os = null;
         InputStream is = null;
         
@@ -113,7 +117,7 @@ public class App
                         }
                     }
                 }
-                
+                timeFinish = System.nanoTime();
                 bytes = bytes.subList(0, bytes.size() - 2);
                 packetBytes = new byte[bytes.size()];
                 for(int i=0; i<bytes.size(); i++) {
@@ -127,7 +131,7 @@ public class App
                     } else {
                         resultPacket = new RawPacket();
                     }
-                    timeFinish = System.nanoTime();
+                    
 //                    System.out.println("TimeStart: " + timeStart + " ms.");
 //                    System.out.print("Received bytes: " + packetBytes.length);                    
 //                    System.out.println("TimeFinish: " + timeFinish + " ms.");
@@ -142,7 +146,7 @@ public class App
                 }
 //                System.out.println();
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep(500);
                 } catch(InterruptedException ex) {
                     break;
                 }
