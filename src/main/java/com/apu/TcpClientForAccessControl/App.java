@@ -1,5 +1,6 @@
 package com.apu.TcpClientForAccessControl;
 
+import com.apu.TcpClientForAccessControl.converter.JsonSerializer;
 import com.apu.TcpServerForAccessControlAPI.packet.AccessPacket;
 import com.apu.TcpServerForAccessControlAPI.packet.EventType;
 import java.io.ByteArrayInputStream;
@@ -47,7 +48,7 @@ public class App
     {
         int deviceNumber;
         if(TEST_MODE == false) {
-//        System.setOut(new PrintStream(new LoggingOutputStream(LogManager.getLogger("outLog"), Level.ALL), true));
+        System.setOut(new PrintStream(new LoggingOutputStream(LogManager.getLogger("outLog"), Level.ALL), true));
         
             if(args.length == 0) {
                 System.out.print("Enter device number");
@@ -70,6 +71,8 @@ public class App
         
         OutputStream os = null;
         InputStream is = null;
+        
+        JsonSerializer serializer = new JsonSerializer();
         
         try {
             socket = new Socket(CONNECTION_HOST, CONNECTION_PORT);
@@ -94,7 +97,7 @@ public class App
                 packet.setTime(new Date());
                 
                 if(TEST_MODE == false) {
-                    packetBytes = serializePacket(packet);                
+                    packetBytes = serializer.serializeBytes(packet);                
                 } else {
                     packetBytes = new byte[]{1,2,3,4,5};
                 }
@@ -136,7 +139,7 @@ public class App
                 try {
                     
                     if(TEST_MODE == false) {
-                        resultPacket = deserializePacket(packetBytes);
+                        resultPacket = serializer.deserializeBytes(packetBytes);
                     } else {
                         resultPacket = new RawPacket();
                     }
@@ -145,7 +148,7 @@ public class App
 //                    System.out.print("Received bytes: " + packetBytes.length);                    
 //                    System.out.println("TimeFinish: " + timeFinish + " ms.");
                     System.out.println(resultPacket + "; time: " + ((timeFinish - timeStart)/1000) + " us.");
-                } catch (ClassNotFoundException | IOException ex) {
+                } catch (Exception ex) {
                     logger.error(ExceptionUtils.getStackTrace(ex));
                     for(byte b:bytes) {
                         System.out.print(b);
