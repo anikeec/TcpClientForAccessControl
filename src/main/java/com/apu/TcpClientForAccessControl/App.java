@@ -48,7 +48,7 @@ public class App
     {
         int deviceNumber;
         if(TEST_MODE == false) {
-        System.setOut(new PrintStream(new LoggingOutputStream(LogManager.getLogger("outLog"), Level.ALL), true));
+//        System.setOut(new PrintStream(new LoggingOutputStream(LogManager.getLogger("outLog"), Level.ALL), true));
         
             if(args.length == 0) {
                 System.out.print("Enter device number");
