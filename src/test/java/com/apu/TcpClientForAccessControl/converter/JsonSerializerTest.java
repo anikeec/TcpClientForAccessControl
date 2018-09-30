@@ -10,6 +10,7 @@ import com.apu.TcpServerForAccessControlAPI.packet.EventType;
 import com.apu.TcpServerForAccessControlAPI.packet.MessageType;
 import com.apu.TcpServerForAccessControlAPI.packet.RawPacket;
 import com.google.gson.JsonSyntaxException;
+import java.util.Date;
 import junit.framework.TestCase;
 
 /**
@@ -23,13 +24,16 @@ public class JsonSerializerTest extends TestCase {
     private final String TEST_CARD_NUMBER = "12344231";
     private final int TEST_EVENT_ID = 6;
     private final EventType TEST_EVENT_TYPE = EventType.EXIT_QUERY;
+    private final long TEST_TIME = 1538292073916l;
+    private final String TEST_TIME_STR = "Sep 30, 2018 10:21:13 AM";
     private final String TEST_JSON_ACCESS =
                             "{\"mt\":\"ACCESS\","
                             + "\"cn\":\"" + TEST_CARD_NUMBER + "\","
                             + "\"et\":\"" + TEST_EVENT_TYPE.toString() + "\","
                             + "\"ei\":" + TEST_EVENT_ID + ","
                             + "\"dn\":" + TEST_DEVICE_NUMBER + ","
-                            + "\"pn\":" + TEST_PACKET_NUMBER + "}";
+                            + "\"pn\":" + TEST_PACKET_NUMBER + ","
+                            + "\"t\":" + TEST_TIME_STR + "}";
     
     public JsonSerializerTest(String testName) {
         super(testName);
@@ -57,6 +61,7 @@ public class JsonSerializerTest extends TestCase {
         expResult.setCardNumber(TEST_CARD_NUMBER);
         expResult.setEventId(TEST_EVENT_ID);
         expResult.setEventType(TEST_EVENT_TYPE);
+        expResult.setTime(new Date(TEST_TIME));
         
         String inputJson = TEST_JSON_ACCESS;
         JsonSerializer instance = new JsonSerializer();
@@ -92,6 +97,7 @@ public class JsonSerializerTest extends TestCase {
         inputPkt.setCardNumber(TEST_CARD_NUMBER);
         inputPkt.setEventId(TEST_EVENT_ID);
         inputPkt.setEventType(TEST_EVENT_TYPE);
+        inputPkt.setTime(new Date(TEST_TIME));
         JsonSerializer instance = new JsonSerializer();
         String expResult = TEST_JSON_ACCESS;
         String result = instance.serialize(inputPkt);
