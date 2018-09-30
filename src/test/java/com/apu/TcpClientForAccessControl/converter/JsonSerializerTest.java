@@ -33,7 +33,7 @@ public class JsonSerializerTest extends TestCase {
                             + "\"ei\":" + TEST_EVENT_ID + ","
                             + "\"dn\":" + TEST_DEVICE_NUMBER + ","
                             + "\"pn\":" + TEST_PACKET_NUMBER + ","
-                            + "\"t\":" + TEST_TIME_STR + "}";
+                            + "\"t\":\"" + TEST_TIME_STR + "\"}";
     
     public JsonSerializerTest(String testName) {
         super(testName);
@@ -103,11 +103,9 @@ public class JsonSerializerTest extends TestCase {
         String result = instance.serialize(inputPkt);
         assertEquals(expResult, result);
         
-        try {
-            instance.serialize(null);
-            fail();
-        } catch (JsonSyntaxException e) { }       
-        
+        expResult = "null";
+        result = instance.serialize(null);       
+        assertEquals(expResult, result);
     }
     
 }
