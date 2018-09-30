@@ -45,16 +45,20 @@ public class JsonSerializer {
         return packet;
     }
     
+    public RawPacket deserializeBytes(byte[] inputBytes) {
+        return this.deserialize(new String(inputBytes));
+    }
+    
     public String serialize(RawPacket inputPkt) {
         GsonBuilder builder = new GsonBuilder();
         builder.excludeFieldsWithoutExposeAnnotation();
         Gson gson = builder.create();
         String resultJson = gson.toJson(inputPkt);
-        
-        RawPacket resPacket = this.deserialize(resultJson);
-        
-        
         return resultJson;
+    }
+    
+    public byte[] serializeBytes(RawPacket inputPkt) {
+        return this.serialize(inputPkt).getBytes();
     }
     
 }
