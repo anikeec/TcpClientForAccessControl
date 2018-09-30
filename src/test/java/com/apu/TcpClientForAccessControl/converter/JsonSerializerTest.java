@@ -23,6 +23,13 @@ public class JsonSerializerTest extends TestCase {
     private final String TEST_CARD_NUMBER = "12344231";
     private final int TEST_EVENT_ID = 6;
     private final EventType TEST_EVENT_TYPE = EventType.EXIT_QUERY;
+    private final String TEST_JSON_ACCESS =
+                            "{\"mt\":\"ACCESS\","
+                            + "\"cn\":\"" + TEST_CARD_NUMBER + "\","
+                            + "\"et\":\"" + TEST_EVENT_TYPE.toString() + "\","
+                            + "\"ei\":" + TEST_EVENT_ID + ","
+                            + "\"dn\":" + TEST_DEVICE_NUMBER + ","
+                            + "\"pn\":" + TEST_PACKET_NUMBER + "}";
     
     public JsonSerializerTest(String testName) {
         super(testName);
@@ -51,10 +58,7 @@ public class JsonSerializerTest extends TestCase {
         expResult.setEventId(TEST_EVENT_ID);
         expResult.setEventType(TEST_EVENT_TYPE);
         
-        String inputJson = 
-                "{\"messageType\":\"ACCESS\",\"cardNumber\":\"12344231\","
-                + "\"eventType\":\"EXIT_QUERY\",\"eventId\":6,"
-                + "\"deviceNumber\":10,\"packetNumber\":5}";
+        String inputJson = TEST_JSON_ACCESS;
         JsonSerializer instance = new JsonSerializer();
 
         RawPacket result = instance.deserialize(inputJson);
@@ -81,6 +85,7 @@ public class JsonSerializerTest extends TestCase {
      */
     public void testSerialize() {
         System.out.println("serialize");
+        
         AccessPacket inputPkt = new AccessPacket();
         inputPkt.setDeviceNumber(TEST_DEVICE_NUMBER);
         inputPkt.setPacketNumber(TEST_PACKET_NUMBER);
@@ -88,10 +93,7 @@ public class JsonSerializerTest extends TestCase {
         inputPkt.setEventId(TEST_EVENT_ID);
         inputPkt.setEventType(TEST_EVENT_TYPE);
         JsonSerializer instance = new JsonSerializer();
-        String expResult = 
-                "{\"messageType\":\"ACCESS\",\"cardNumber\":\"12344231\","
-                + "\"eventType\":\"EXIT_QUERY\",\"eventId\":6,"
-                + "\"deviceNumber\":10,\"packetNumber\":5}";
+        String expResult = TEST_JSON_ACCESS;
         String result = instance.serialize(inputPkt);
         assertEquals(expResult, result);
         

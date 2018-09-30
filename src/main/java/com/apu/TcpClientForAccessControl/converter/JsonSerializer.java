@@ -25,8 +25,8 @@ public class JsonSerializer {
         Gson gson = builder.create();
         JsonObject object = gson.fromJson(inputJson, JsonObject.class);
         String messageType = null;
-        if(object.get("messageType")  != null) {
-            messageType = object.get("messageType").getAsString();
+        if(object.get("mt")  != null) {
+            messageType = object.get("mt").getAsString();
         }
         RawPacket packet = null;
         if((messageType != null) && 
