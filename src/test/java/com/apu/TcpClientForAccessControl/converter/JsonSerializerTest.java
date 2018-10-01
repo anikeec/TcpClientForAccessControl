@@ -63,20 +63,17 @@ public class JsonSerializerTest extends TestCase {
         expResult.setEventType(TEST_EVENT_TYPE);
         expResult.setTime(new Date(TEST_TIME));
         
-        String inputJson = TEST_JSON_ACCESS;
         JsonSerializer instance = new JsonSerializer();
-
-        RawPacket result = instance.deserialize(inputJson);
+        
+        RawPacket result = instance.deserialize(TEST_JSON_ACCESS);
         assertTrue(result instanceof AccessPacket);
         AccessPacket apResult = (AccessPacket)result;
-        assertTrue(
-            (apResult.getDeviceNumber().equals(expResult.getDeviceNumber())) &&
-            (apResult.getPacketNumber().equals(expResult.getPacketNumber())) && 
-            (apResult.getCardNumber().equals(expResult.getCardNumber())) && 
-            (apResult.getEventId().equals(expResult.getEventId())) && 
-            (apResult.getEventType().equals(expResult.getEventType())) && 
-            (apResult.getMessageType().equals(expResult.getMessageType())) 
-        );
+        assertTrue(apResult.getDeviceNumber().equals(expResult.getDeviceNumber()));
+        assertTrue((apResult.getPacketNumber().equals(expResult.getPacketNumber())));
+        assertTrue((apResult.getCardNumber().equals(expResult.getCardNumber())));
+        assertTrue((apResult.getEventId().equals(expResult.getEventId())));
+        assertTrue((apResult.getEventType().equals(expResult.getEventType())));
+        assertTrue((apResult.getMessageType().equals(expResult.getMessageType())));
 
         try {
             instance.deserialize(null);
