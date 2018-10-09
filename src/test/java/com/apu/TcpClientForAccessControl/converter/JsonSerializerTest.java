@@ -25,7 +25,7 @@ public class JsonSerializerTest extends TestCase {
     private final int TEST_EVENT_ID = 6;
     private final EventType TEST_EVENT_TYPE = EventType.EXIT_QUERY;
     private final long TEST_TIME = 1538292073916l;
-    private final String TEST_TIME_STR = "Sep 30, 2018 10:21:13 AM";
+    private final String TEST_TIME_STR = "30.09.18 10:21:13";//"Sep 30, 2018 10:21:13 AM";
     private final String TEST_JSON_ACCESS =
                             "{\"mt\":\"ACCESS\","
                             + "\"cn\":\"" + TEST_CARD_NUMBER + "\","
